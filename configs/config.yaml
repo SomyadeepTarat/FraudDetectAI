@@ -102,3 +102,21 @@ modeling:
       learning_rate: 0.08
       subsample: 0.9
       colsample_bytree: 0.9
+
+graph:
+  source_column: "nameOrig"
+  destination_column: "nameDest"
+  amount_column: "amount"
+  transaction_type_column: "type"
+  target_column: "isFraud"
+  step_column: "step"
+
+  max_graph_rows: 1500000
+  graph_output_path: "models/artifacts/transaction_graph.pkl"
+  graph_summary_output_path: "reports/metrics/graph_summary.json"
+
+  top_receivers_plot_path: "reports/figures/top_receivers_by_in_degree.png"
+  top_senders_plot_path: "reports/figures/top_senders_by_out_degree.png"
+
+  top_k_nodes: 20
+  random_seed: 42
