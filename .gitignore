@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment variables
+.env
+
+# Data files
+data/raw/*
+data/interim/*
+data/processed/*
+data/external/*
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+!data/external/.gitkeep
+
+# Model artifacts
+models/baseline/*
+models/graph_enhanced/*
+models/artifacts/*
+!models/baseline/.gitkeep
+!models/graph_enhanced/.gitkeep
+!models/artifacts/.gitkeep
+
+# Reports
+reports/figures/*
+reports/metrics/*
+reports/model_cards/*
+!reports/figures/.gitkeep
+!reports/metrics/.gitkeep
+!reports/model_cards/.gitkeep
+
+# OS files
+.DS_Store
+
+# Logs
+*.log
+
+# Build artifacts
+dist/
+build/
+*.egg-info/

@@ -1,0 +1,48 @@
+project:
+  name: "FraudDetectAI"
+  version: "0.1.0"
+  random_seed: 42
+
+data:
+  raw_data_path: "data/raw/paysim dataset.csv"
+  interim_data_path: "data/interim/paysim_cleaned.parquet"
+  processed_data_dir: "data/processed"
+  validation_report_path: "reports/metrics/data_validation_report.json"
+
+schema:
+  required_columns:
+    - "step"
+    - "type"
+    - "amount"
+    - "nameOrig"
+    - "oldbalanceOrg"
+    - "newbalanceOrig"
+    - "nameDest"
+    - "oldbalanceDest"
+    - "newbalanceDest"
+    - "isFraud"
+    - "isFlaggedFraud"
+
+  numeric_columns:
+    - "step"
+    - "amount"
+    - "oldbalanceOrg"
+    - "newbalanceOrig"
+    - "oldbalanceDest"
+    - "newbalanceDest"
+    - "isFraud"
+    - "isFlaggedFraud"
+
+  categorical_columns:
+    - "type"
+    - "nameOrig"
+    - "nameDest"
+
+target:
+  name: "isFraud"
+  positive_class: 1
+  negative_class: 0
+
+preprocessing:
+  drop_duplicates: true
+  save_format: "parquet"
