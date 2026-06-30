@@ -46,3 +46,59 @@ target:
 preprocessing:
   drop_duplicates: true
   save_format: "parquet"
+
+eda:
+  summary_output_path: "reports/metrics/eda_summary.json"
+  figures_dir: "reports/figures"
+  sample_size_for_plots: 300000
+  random_seed: 42
+
+modeling:
+  test_size: 0.2
+  random_seed: 42
+  max_training_rows: 1500000
+  metrics_output_path: "reports/metrics/baseline_model_metrics.json"
+  confusion_matrix_figure_path: "reports/figures/baseline_confusion_matrices.png"
+  feature_columns_output_path: "models/artifacts/baseline_feature_columns.json"
+
+  baseline_model_dir: "models/baseline"
+
+  categorical_features:
+    - "type"
+
+  numeric_features:
+    - "step"
+    - "amount"
+    - "oldbalanceOrg"
+    - "newbalanceOrig"
+    - "oldbalanceDest"
+    - "newbalanceDest"
+    - "origin_balance_delta"
+    - "destination_balance_delta"
+    - "amount_to_old_origin_balance_ratio"
+    - "amount_to_old_destination_balance_ratio"
+    - "is_origin_balance_emptied"
+    - "is_destination_balance_unchanged"
+    - "is_transfer_type"
+    - "is_cashout_type"
+
+  baseline_models:
+    logistic_regression:
+      enabled: true
+      output_filename: "logistic_regression.joblib"
+
+    random_forest:
+      enabled: true
+      output_filename: "random_forest.joblib"
+      n_estimators: 150
+      max_depth: 12
+      min_samples_leaf: 5
+
+    xgboost:
+      enabled: true
+      output_filename: "xgboost.joblib"
+      n_estimators: 250
+      max_depth: 5
+      learning_rate: 0.08
+      subsample: 0.9
+      colsample_bytree: 0.9
