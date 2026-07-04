@@ -246,4 +246,26 @@ threshold_tuning:
     low_max: 0.25
     medium_max: 0.50
     high_max: 0.75
-    
+
+explainability:
+  model_path: "models/graph_enhanced/xgboost_graph.joblib"
+  scored_transactions_path: "data/processed/scored_transactions.parquet"
+
+  feature_metadata_path: "models/artifacts/graph_feature_columns.json"
+
+  feature_importance_report_path: "reports/metrics/feature_importance_report.json"
+  feature_importance_plot_path: "reports/figures/top_feature_importance.png"
+
+  transaction_explanations_output_path: "reports/metrics/top_risky_transaction_explanations.json"
+
+  top_n_features: 25
+  top_n_transactions: 20
+
+  explanation_rules:
+    high_probability_threshold: 0.75
+    high_amount_ratio_threshold: 0.80
+    high_receiver_fraud_rate_threshold: 0.20
+    high_sender_fraud_rate_threshold: 0.20
+    high_edge_fraud_rate_threshold: 0.20
+    high_receiver_in_degree_threshold: 10
+    high_sender_out_degree_threshold: 10
