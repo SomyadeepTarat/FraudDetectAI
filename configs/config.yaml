@@ -225,3 +225,25 @@ graph_modeling:
       learning_rate: 0.08
       subsample: 0.9
       colsample_bytree: 0.9
+
+threshold_tuning:
+  model_name: "xgboost"
+  model_path: "models/graph_enhanced/xgboost_graph.joblib"
+
+  threshold_results_output_path: "reports/metrics/threshold_tuning_results.json"
+  threshold_curve_output_path: "reports/figures/threshold_tuning_curve.png"
+  risk_scoring_report_output_path: "reports/metrics/final_risk_scoring_report.json"
+  scored_transactions_output_path: "data/processed/scored_transactions.parquet"
+
+  optimization_metric: "f1"
+  minimum_recall: 0.80
+
+  threshold_min: 0.01
+  threshold_max: 0.99
+  threshold_step: 0.01
+
+  risk_bands:
+    low_max: 0.25
+    medium_max: 0.50
+    high_max: 0.75
+    
