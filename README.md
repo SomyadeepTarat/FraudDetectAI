@@ -414,9 +414,3 @@ A future production version should implement time-aware graph feature generation
 * Drift monitoring
 * Database-backed transaction storage
 * Analyst feedback loop for fraud investigation outcomes
-
----
-
-## Resume Summary
-
-FraudDetect AI is a graph-based fraud detection system that models sender-receiver transaction networks and uses graph-enhanced machine learning to identify suspicious transactions. The project includes end-to-end data processing, graph feature engineering, baseline comparison, model evaluation, threshold tuning, explainability, and a Streamlit investigation dashboard.
