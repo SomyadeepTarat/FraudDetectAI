@@ -11,20 +11,24 @@ from dashboard_utils import (
 
 
 st.set_page_config(
-    page_title="FraudGraph AI",
+    page_title="FraudDetectAI",
     layout="wide",
 )
 
-st.title(" FraudGraph AI")
-st.subheader("Financial Fraud Detection")
+st.title("FraudDetectAI")
+st.subheader("AI-Based Fraud Detection in Banking Transaction Database")
+st.info("Open Banking for live transfers, customer profiles and alerts, or DBMS Demonstration for schema, audit trails, rollback, concurrency and query plans. Existing ML analysis pages remain available below.")
 
 st.markdown(
     """
-FraudGraph AI models transactions as a directed sender-receiver network and uses
-machine learning to identify suspicious transactions.
+FraudDetectAI processes banking transfers in a relational database with atomic
+balance updates, concurrency protection, trigger-generated alerts and audit logs.
+The existing PaySim model provides an integrated fraud-analysis layer.
 
 Use the sidebar pages to explore:
 
+- live banking transfers, alerts and customer history
+- DBMS schema, audit logs, indexes, rollback and concurrency
 - fraud overview
 - scored transactions
 - graph structure
@@ -141,5 +145,5 @@ else:
 st.divider()
 
 st.caption(
-    "FraudGraph AI is a portfolio ML project. Predictions are for demonstration and model-analysis purposes."
+    "Database Systems course project. Model predictions and synthetic banking scenarios are for academic demonstration."
 )

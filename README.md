@@ -1,3 +1,139 @@
+# FraudDetectAI — AI-Based Fraud Detection in Banking Transaction Database
+
+A Database Systems course project: relational banking transactions, ACID transfers,
+concurrency protection, SQL triggers/audit logs, indexed analytics and integrated
+PaySim fraud detection. The existing ML pipeline and analysis pages are preserved.
+
+## Local setup
+
+Python 3.13 is tested. From this directory:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+export PYTHONPATH=src:.
+cp .env.example .env  # only if you do not already have .env
+```
+
+A fitted **baseline** model is required for transfers. If one already exists, set
+`MODEL_PATH` to it. With the real PaySim CSV at
+`data/raw/PS_20174392719_1491204439457_log.csv`, generate a bounded local artifact:
+
+```bash
+python scripts/train_banking_model.py
+```
+
+This calls the existing Random Forest pipeline on real labeled rows. It records
+sample-selection limitations and evaluation in `reports/metrics/banking_model_metadata.json`.
+It is an integration model, not a claim of calibrated production accuracy. Use the
+original pipeline below for full research training. Model/data files are gitignored;
+clones must provide the PaySim dataset or a compatible trusted joblib artifact.
+
+### Recommended PostgreSQL setup
+
+```bash
+docker compose up -d postgres
+export DATABASE_URL='postgresql+psycopg://frauddetect:local_demo_password@localhost:5432/frauddetect'
+alembic upgrade head
+python scripts/seed_database.py
+uvicorn app.main:app --reload
+```
+
+The password is a local-demo default. Set `POSTGRES_PASSWORD` before first container
+creation if desired, then update the URL. PostgreSQL data persists in a named volume.
+`docker compose up --build -d` optionally runs the backend too; generate/provide the
+baseline model first because the container mounts `./models` read-only. Apply seed
+scripts from your host with the PostgreSQL URL. Ports bind to localhost.
+
+### Zero-server SQLite fallback
+
+```bash
+export DATABASE_URL=sqlite:///data/banking.db
+alembic upgrade head
+python scripts/seed_database.py
+uvicorn app.main:app --reload
+```
+
+SQLite uses real foreign keys, constraints, alert/audit triggers, views, persistence
+and database writer locking. **PostgreSQL is required for the full row-locking,
+JSONB and stored-function demonstration.** The UI reports the active dialect.
+
+In a second terminal:
+
+```bash
+source .venv/bin/activate
+export PYTHONPATH=src:.
+streamlit run app/streamlit_app.py
+```
+
+Open [the dashboard](http://localhost:8501) and [API documentation](http://localhost:8000/docs).
+Banking includes registration, transfers, filters, alert reviews and customer profiles.
+DBMS Demonstration exposes live objects, audits, query plans, rollback and concurrency.
+Original ML pages still use their batch-generated artifacts.
+
+## Configuration
+
+`.env.example` includes `DATABASE_URL`, `MODEL_PATH`, `FRAUD_THRESHOLD`, `APP_ENV` and
+`BANKING_API_URL`. The threshold initializes the database singleton on migration;
+update `risk_settings` via SQL to change it afterward. Keep `.env` uncommitted.
+`APP_ENV=production` omits development demo routes. Authentication is optional and
+not implemented; this course application is intended to run locally.
+
+## Transfer workflow
+
+```text
+Validated request → lock customer and both accounts → debit/credit and store transfer
+→ indexed SQL history → existing baseline model → store probability and behaviour risk
+→ database alert/audit triggers → commit → dashboard
+```
+
+Any essential failure rolls back all writes. Monetary values use Decimal/NUMERIC.
+Same-currency internal transfers are supported; external payment/cash/deposit balance
+semantics are deliberately not inferred. Device/location fields are application/demo
+metadata, not fabricated PaySim attributes. Final risk is a documented heuristic;
+the original ML probability is separately stored and displayed.
+
+Example request after seeding:
+
+```bash
+curl -X POST http://localhost:8000/transactions \
+  -H 'Content-Type: application/json' \
+  -d '{"customer_id":"C001","account_id":"A001","destination_account_id":"A002","amount":"4500.00","payment_method":"UPI","device_id":"D001","location":"Vellore"}'
+```
+
+## Tests and demonstrations
+
+```bash
+python -m pytest -q
+# Also exercise PostgreSQL migrations, triggers, SQL functions and actual row locks:
+TEST_DATABASE_URL="$DATABASE_URL" python -m pytest tests/test_banking.py -q
+python scripts/demo_fraud.py
+python scripts/demo_rollback.py
+python scripts/demo_concurrency.py
+docker compose exec -T postgres psql -U frauddetect -d frauddetect < docs/dbms_demo.sql
+```
+
+PostgreSQL tests use isolated disposable schemas. The seed creates 20 customers,
+30 accounts, 22 devices and 426 model-scored synthetic banking transfers. ACID demos
+use disposable accounts and retain redacted audit history. Fraud demos intentionally
+add persisted transactions; repeated runs affect historical risk.
+
+## Architecture and academic documentation
+
+- [Architecture and repository audit](docs/ARCHITECTURE.md)
+- [Database design, ER diagram and normalization tradeoffs](docs/DATABASE_DESIGN.md)
+- [DBMS concepts and implementation examples](docs/DBMS_CONCEPTS.md)
+- [5–10 minute viva guide](docs/DEMO_GUIDE.md)
+- [Executable PostgreSQL demonstrations](docs/dbms_demo.sql)
+
+Screenshots to capture: Banking overview, stored prediction, trigger alert,
+old/new audit values, query plan, concurrency result and rollback result.
+
+---
+
+## Existing ML pipeline reference
+
 # FraudDetect AI: Graph-Based Financial Fraud Detection
 
 FraudDetect AI is a machine learning project that detects suspicious financial transactions by combining traditional transaction-level features with graph-based account-network features.

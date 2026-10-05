@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: frauddetect
+      POSTGRES_USER: frauddetect
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local_demo_password}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - banking_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U frauddetect -d frauddetect"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  backend:
+    build: .
+    environment:
+      DATABASE_URL: postgresql+psycopg://frauddetect:${POSTGRES_PASSWORD:-local_demo_password}@postgres:5432/frauddetect
+      MODEL_PATH: models/baseline/random_forest.joblib
+      FRAUD_THRESHOLD: ${FRAUD_THRESHOLD:-0.80}
+      APP_ENV: ${APP_ENV:-development}
+      PYTHONPATH: /app/src:/app
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./models:/app/models:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+volumes:
+  banking_postgres:

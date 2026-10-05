@@ -54,3 +54,7 @@ reports/model_cards/*
 dist/
 build/
 *.egg-info/
+
+*.db
+*.db-shm
+*.db-wal

@@ -4,7 +4,7 @@ project:
   random_seed: 42
 
 data:
-  raw_data_path: "data/raw/paysim dataset.csv"
+  raw_data_path: "data/raw/PS_20174392719_1491204439457_log.csv"
   interim_data_path: "data/interim/paysim_cleaned.parquet"
   processed_data_dir: "data/processed"
   validation_report_path: "reports/metrics/data_validation_report.json"
