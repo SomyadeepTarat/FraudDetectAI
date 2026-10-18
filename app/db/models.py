@@ -6,6 +6,7 @@ from uuid import uuid4
 
 from sqlalchemy import (
     JSON,
+    BigInteger,
     Boolean,
     CheckConstraint,
     DateTime,
@@ -65,6 +66,8 @@ class Account(Base):
     customer_id: Mapped[str] = mapped_column(
         ForeignKey("customers.customer_id"), index=True
     )
+    ledger_started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    ledger_seq: Mapped[int] = mapped_column(BigInteger, default=0, server_default="0")
     account_type: Mapped[str] = mapped_column(String(20), default="SAVINGS")
     balance: Mapped[Decimal] = mapped_column(Numeric(18, 2), default=Decimal(0))
     currency: Mapped[str] = mapped_column(String(3), default="INR")
@@ -114,6 +117,8 @@ class BankingTransaction(Base):
     destination_account_id: Mapped[str] = mapped_column(
         ForeignKey("accounts.account_id")
     )
+    idempotency_key: Mapped[str | None] = mapped_column(String(64), unique=True)
+    request_digest: Mapped[str | None] = mapped_column(String(64))
     amount: Mapped[Decimal] = mapped_column(Numeric(18, 2))
     transaction_type: Mapped[str] = mapped_column(String(20), default="TRANSFER")
     payment_method: Mapped[str] = mapped_column(String(20), default="UPI")
@@ -272,4 +277,87 @@ class RiskSettings(Base):
         CheckConstraint(
             "fraud_threshold > 0 AND fraud_threshold < 1", name="ck_fraud_threshold"
         ),
+    )
+
+
+class LedgerEntry(Base):
+    __tablename__ = "ledger_entries"
+    account_id: Mapped[str] = mapped_column(
+        ForeignKey("accounts.account_id"), primary_key=True
+    )
+    seq: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    transaction_id: Mapped[str] = mapped_column(
+        ForeignKey("transactions.transaction_id")
+    )
+    side: Mapped[str] = mapped_column(String(6))
+    amount: Mapped[Decimal] = mapped_column(Numeric(18, 2))
+    balance_before: Mapped[Decimal] = mapped_column(Numeric(18, 2))
+    balance_after: Mapped[Decimal] = mapped_column(Numeric(18, 2))
+    recorded_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    __table_args__ = (
+        UniqueConstraint("transaction_id", "side"),
+        UniqueConstraint("transaction_id", "account_id", "side", "seq"),
+        CheckConstraint(
+            "seq > 0 AND amount > 0 AND balance_before >= 0 AND balance_after >= 0"
+        ),
+        CheckConstraint(
+            "(side = 'DEBIT' AND balance_after = balance_before - amount) OR (side = 'CREDIT' AND balance_after = balance_before + amount)"
+        ),
+        Index("idx_ledger_account_recorded_seq", "account_id", "recorded_at", "seq"),
+    )
+
+
+class FlowCertificate(Base):
+    __tablename__ = "flow_certificates"
+    certificate_id: Mapped[str] = mapped_column(
+        String(64), primary_key=True, default=new_id
+    )
+    transaction_id: Mapped[str] = mapped_column(
+        ForeignKey("transactions.transaction_id"), unique=True
+    )
+    account_id: Mapped[str] = mapped_column(ForeignKey("accounts.account_id"))
+    target_seq: Mapped[int] = mapped_column(BigInteger)
+    target_side: Mapped[str] = mapped_column(String(6), default="DEBIT")
+    target_amount: Mapped[Decimal] = mapped_column(Numeric(18, 2))
+    status: Mapped[str] = mapped_column(String(12))
+    lower_amount: Mapped[Decimal | None] = mapped_column(Numeric(18, 2))
+    upper_amount: Mapped[Decimal | None] = mapped_column(Numeric(18, 2))
+    review: Mapped[bool] = mapped_column(Boolean, default=False)
+    algorithm_version: Mapped[str] = mapped_column(String(64))
+    policy_version: Mapped[str] = mapped_column(String(64))
+    payload: Mapped[dict] = mapped_column(json_type)
+    evidence_digest: Mapped[str] = mapped_column(String(64))
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["transaction_id", "account_id", "target_side", "target_seq"],
+            [
+                "ledger_entries.transaction_id",
+                "ledger_entries.account_id",
+                "ledger_entries.side",
+                "ledger_entries.seq",
+            ],
+        ),
+        CheckConstraint("target_side = 'DEBIT' AND target_amount > 0"),
+        CheckConstraint(
+            "(status = 'VALID' AND lower_amount IS NOT NULL AND upper_amount IS NOT NULL AND lower_amount >= 0 AND upper_amount >= lower_amount AND upper_amount <= target_amount) OR (status = 'INCOMPLETE' AND lower_amount IS NULL AND upper_amount IS NULL AND review = false)"
+        ),
+        Index("idx_flow_review_status", "review", "status"),
+    )
+
+
+class CertificateEvidence(Base):
+    __tablename__ = "certificate_evidence"
+    certificate_id: Mapped[str] = mapped_column(
+        ForeignKey("flow_certificates.certificate_id"), primary_key=True
+    )
+    account_id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    seq: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    ordinal: Mapped[int] = mapped_column(Integer)
+    role: Mapped[str] = mapped_column(String(20))
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["account_id", "seq"], ["ledger_entries.account_id", "ledger_entries.seq"]
+        ),
+        UniqueConstraint("certificate_id", "ordinal"),
+        CheckConstraint("role IN ('OPENING_ANCHOR','HISTORY','TARGET')"),
     )

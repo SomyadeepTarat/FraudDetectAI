@@ -12,8 +12,9 @@ from app.db.models import (
     AuditLog,
     BankingTransaction,
     Customer,
-    FraudAlert,
+    FlowCertificate,
     FraudPrediction,
+    LedgerEntry,
 )
 from app.schemas import TransactionCreate
 from app.services.transactions import BankingError, process_transfer
@@ -57,6 +58,16 @@ def snapshot(factory, ids):
                 .select_from(BankingTransaction)
                 .where(BankingTransaction.customer_id == customer)
             ),
+            "ledger_count": session.scalar(
+                select(func.count())
+                .select_from(LedgerEntry)
+                .where(LedgerEntry.account_id.in_(ids[1:]))
+            ),
+            "certificate_count": session.scalar(
+                select(func.count())
+                .select_from(FlowCertificate)
+                .where(FlowCertificate.account_id == source)
+            ),
             "prediction_count": session.scalar(
                 select(func.count())
                 .select_from(FraudPrediction)
@@ -72,30 +83,8 @@ def snapshot(factory, ids):
 
 
 def cleanup(factory, ids):
-    with factory() as session, session.begin():
-        txs = session.scalars(
-            select(BankingTransaction).where(BankingTransaction.customer_id == ids[0])
-        ).all()
-        for tx in txs:
-            for alert in session.scalars(
-                select(FraudAlert).where(FraudAlert.transaction_id == tx.transaction_id)
-            ):
-                session.delete(alert)
-            session.flush()
-            for prediction in session.scalars(
-                select(FraudPrediction).where(
-                    FraudPrediction.transaction_id == tx.transaction_id
-                )
-            ):
-                session.delete(prediction)
-            session.flush()
-            session.delete(tx)
-        session.flush()
-        for account_id in ids[1:]:
-            session.delete(session.get(Account, account_id))
-        session.flush()
-        session.delete(session.get(Customer, ids[0]))
-        # Trigger-generated audit entries deliberately remain as demonstration evidence.
+    # Retain isolated demo histories: certificates must remain replayable.
+    return
 
 
 def rollback_demo(factory, inference):
@@ -165,7 +154,13 @@ def concurrency_demo(factory, inference):
             results = list(pool.map(debit, ["8000", "7000"]))
         after = snapshot(factory, ids)
         assert sum(result["success"] for result in results) == 1
-        assert after["transaction_count"] == after["prediction_count"] == 1
+        assert (
+            after["transaction_count"]
+            == after["prediction_count"]
+            == after["certificate_count"]
+            == 1
+        )
+        assert after["ledger_count"] == 2
         assert Decimal(after["source_balance"]) + Decimal(
             after["destination_balance"]
         ) == Decimal(10000)

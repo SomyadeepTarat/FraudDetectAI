@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="510" height="490" viewBox="0 0 510 490">
+<rect width="100%" height="100%" fill="white"/>
+<rect x="171" y="8" width="168" height="62" rx="6" fill="#EDF4F8" stroke="#142C46"/>
+<text x="255.0" y="27" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#142C46">CUSTOMERS</text>
+<text x="255.0" y="44" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">PK customer_id</text>
+<text x="255.0" y="57" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">UK email</text>
+<rect x="0" y="105" width="155" height="75" rx="6" fill="#EDF4F8" stroke="#142C46"/>
+<text x="77.5" y="124" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#142C46">ACCOUNTS</text>
+<text x="77.5" y="141" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">PK account_id</text>
+<text x="77.5" y="154" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">FK customer_id</text>
+<text x="77.5" y="167" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">balance, currency</text>
+<rect x="355" y="105" width="155" height="75" rx="6" fill="#EDF4F8" stroke="#142C46"/>
+<text x="432.5" y="124" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#142C46">DEVICES</text>
+<text x="432.5" y="141" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">PK device_id</text>
+<text x="432.5" y="154" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">FK customer_id</text>
+<text x="432.5" y="167" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">UK device_identifier</text>
+<polyline points="190,70 77,88 77,105" fill="none" stroke="#56677A" stroke-width="1.2" />
+<polygon points="77,105 79.5,100.0 74.5,100.0" fill="#56677A"/>
+<text x="85" y="78" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="normal" fill="#56677A">1 : 0..N owns</text>
+<polyline points="320,70 432,88 432,105" fill="none" stroke="#56677A" stroke-width="1.2" />
+<polygon points="432,105 434.5,100.0 429.5,100.0" fill="#56677A"/>
+<text x="425" y="78" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="normal" fill="#56677A">1 : 0..N registers</text>
+<rect x="170" y="212" width="170" height="88" rx="6" fill="#EDF4F8" stroke="#142C46"/>
+<text x="255.0" y="231" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#142C46">TRANSACTIONS</text>
+<text x="255.0" y="248" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">PK transaction_id</text>
+<text x="255.0" y="261" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">FK source / destination</text>
+<text x="255.0" y="274" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">FK customer / optional device</text>
+<text x="255.0" y="287" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">amount + balance snapshots</text>
+<polyline points="255,70 255,212" fill="none" stroke="#56677A" stroke-width="1.2" />
+<polygon points="255,212 257.5,207.0 252.5,207.0" fill="#56677A"/>
+<text x="285" y="150" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="normal" fill="#56677A">1 : 0..N</text>
+<polyline points="77,180 77,250 170,250" fill="none" stroke="#56677A" stroke-width="1.2" />
+<polygon points="170,250 165.0,247.5 165.0,252.5" fill="#56677A"/>
+<text x="39" y="218" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="normal" fill="#56677A">source 1 : 0..N</text>
+<polyline points="105,180 105,281 170,281" fill="none" stroke="#56677A" stroke-width="1.2" />
+<polygon points="170,281 165.0,278.5 165.0,283.5" fill="#56677A"/>
+<text x="77" y="300" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="normal" fill="#56677A">dest. 1 : 0..N</text>
+<polyline points="432,180 432,256 340,256" fill="none" stroke="#56677A" stroke-width="1.2" />
+<polygon points="340,256 345.0,258.5 345.0,253.5" fill="#56677A"/>
+<text x="469" y="216" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="normal" fill="#56677A">0..1 : 0..N</text>
+<rect x="170" y="333" width="170" height="62" rx="6" fill="#EDF4F8" stroke="#142C46"/>
+<text x="255.0" y="352" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#142C46">FRAUD_PREDICTIONS</text>
+<text x="255.0" y="369" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">PK prediction_id</text>
+<text x="255.0" y="382" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">FK / UK transaction_id</text>
+<polyline points="255,300 255,333" fill="none" stroke="#56677A" stroke-width="1.2" />
+<polygon points="255,333 257.5,328.0 252.5,328.0" fill="#56677A"/>
+<text x="285" y="320" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="normal" fill="#56677A">1 : 0..1</text>
+<rect x="170" y="426" width="170" height="62" rx="6" fill="#EDF4F8" stroke="#142C46"/>
+<text x="255.0" y="445" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#142C46">FRAUD_ALERTS</text>
+<text x="255.0" y="462" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">PK alert_id; FK transaction_id</text>
+<text x="255.0" y="475" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">FK / UK prediction_id</text>
+<polyline points="255,395 255,426" fill="none" stroke="#56677A" stroke-width="1.2" />
+<polygon points="255,426 257.5,421.0 252.5,421.0" fill="#56677A"/>
+<text x="285" y="414" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="normal" fill="#56677A">1 : 0..1</text>
+<rect x="0" y="358" width="145" height="75" rx="6" fill="#EDF4F8" stroke="#142C46"/>
+<text x="72.5" y="377" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#142C46">AUDIT_LOGS</text>
+<text x="72.5" y="394" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">PK audit_id</text>
+<text x="72.5" y="407" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">table_name + record_id</text>
+<text x="72.5" y="420" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">No polymorphic FK</text>
+<rect x="365" y="358" width="145" height="75" rx="6" fill="#EDF4F8" stroke="#142C46"/>
+<text x="437.5" y="377" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#142C46">RISK_SETTINGS</text>
+<text x="437.5" y="394" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">PK settings_id = 1</text>
+<text x="437.5" y="407" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">fraud_threshold</text>
+<text x="437.5" y="420" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">Policy; no entity FK</text>
+</svg>

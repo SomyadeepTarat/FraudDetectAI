@@ -4,6 +4,16 @@ A Database Systems course project: relational banking transactions, ACID transfe
 concurrency protection, SQL triggers/audit logs, indexed analytics and integrated
 PaySim fraud detection. The existing ML pipeline and analysis pages are preserved.
 
+
+## Implementation update - 16 October 2026
+
+The single-account FABC extension described as proposed below is now implemented.
+See [the completion audit](docs/COMPLETION_AUDIT.md) for implemented requirements,
+new API routes, migration/retention behavior, reproducible experiments and remaining
+verification limits. Existing novelty prose and diagrams below describe the earlier
+proposal, rather than the current implementation status. No new novelty was added.
+Run `alembic upgrade head` before starting the updated API.
+
 ## Local setup
 
 Python 3.13 is tested. From this directory:
@@ -120,6 +130,38 @@ use disposable accounts and retain redacted audit history. Fraud demos intention
 add persisted transactions; repeated runs affect historical risk.
 
 ## Architecture and academic documentation
+
+### System architecture
+
+![FraudDetectAI architecture: existing service and proposed funding evidence layer](docs/diagrams/project_architecture.svg)
+
+The existing application commits balances, the transfer, its prediction and
+trigger-generated alerts/audits together. Navy components are implemented.
+Teal components and dashed connections show the **proposed FABC extension**;
+the new algorithm and tables are not implemented by this documentation update.
+The batch graph-training pipeline remains separate from online baseline inference.
+
+### Proposed academic novelty: funding ambiguity bounds
+
+**Funding Ambiguity Bounds Certificate (FABC)** computes the minimum and maximum
+amount of an outgoing transfer that can be funded by recent incoming credits,
+respecting the opening balance and every intervening debit. It then binds the
+result to an ordered, replayable ledger evidence prefix inside the transfer's
+database transaction. A high unavoidable recent-funding share can support
+pass-through review; it does not establish fraud or identify a unique money source.
+
+The minimum version uses a linear Decimal scan, per-account ledger sequences,
+three proposed tables and indexed history queries. The proposal includes exact
+formulas, mixed-funds examples, schema constraints, missing-evidence handling,
+concurrency requirements, an implementation roadmap and evaluation experiments.
+This is a candidate research contribution. Patent novelty and eligibility remain
+unverified; related flow-detection and tracing prior art is discussed in the report.
+
+- [Complete project, novelty and architecture PDF](output/pdf/FraudDetectAI_Project_Novelty_and_Architecture.pdf)
+- [Editable proposal text](docs/PROJECT_NOVELTY_PROPOSAL.md)
+- [Current database relationship diagram](docs/diagrams/database_existing.svg)
+- [Proposed evidence-table relationship diagram](docs/diagrams/database_proposed.svg)
+- [PDF and vector-diagram generator](scripts/create_project_proposal.py)
 
 - [Architecture and repository audit](docs/ARCHITECTURE.md)
 - [Database design, ER diagram and normalization tradeoffs](docs/DATABASE_DESIGN.md)
@@ -426,7 +468,7 @@ Install dependencies:
 ```bash
 python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
-pip install -e .
+export PYTHONPATH=src:.
 ```
 
 Copy environment file:

@@ -1,0 +1,91 @@
+{
+  "seed": 20261016,
+  "n": 1200,
+  "threshold": 0.8,
+  "review_budget": 120,
+  "metrics": {
+    "fabc": {
+      "precision": 0.3925233644859813,
+      "recall": 0.42,
+      "average_precision": 0.288275025265658,
+      "false_alerts_per_1000_benign": 130.0,
+      "recall_at_120_reviews": 0.23,
+      "alerted_amount": "1335721"
+    },
+    "ml": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "average_precision": 0.1819281409601634,
+      "false_alerts_per_1000_benign": 0.0,
+      "recall_at_120_reviews": 0.105,
+      "alerted_amount": "0"
+    },
+    "ml_behaviour": {
+      "precision": 0.19090909090909092,
+      "recall": 0.105,
+      "average_precision": 0.1737626934806603,
+      "false_alerts_per_1000_benign": 89.0,
+      "recall_at_120_reviews": 0.115,
+      "alerted_amount": "2440159"
+    },
+    "upper": {
+      "precision": 0.2509727626459144,
+      "recall": 0.645,
+      "average_precision": 0.23323570432357044,
+      "false_alerts_per_1000_benign": 385.0,
+      "recall_at_120_reviews": 0.16,
+      "alerted_amount": "2872780"
+    },
+    "no_counterparty": {
+      "precision": 0.3978102189781022,
+      "recall": 0.545,
+      "average_precision": 0.3536467719425096,
+      "false_alerts_per_1000_benign": 165.0,
+      "recall_at_120_reviews": 0.22,
+      "alerted_amount": "1508942"
+    },
+    "velocity": {
+      "precision": 0.1624685138539043,
+      "recall": 0.645,
+      "average_precision": 0.16395885810243493,
+      "false_alerts_per_1000_benign": 665.0,
+      "recall_at_120_reviews": 0.065,
+      "alerted_amount": "12288850"
+    },
+    "fifo": {
+      "precision": 0.38181818181818183,
+      "recall": 0.63,
+      "average_precision": 0.30953437834110614,
+      "false_alerts_per_1000_benign": 204.0,
+      "recall_at_120_reviews": 0.2,
+      "alerted_amount": "1659445"
+    },
+    "lifo": {
+      "precision": 0.3421750663129973,
+      "recall": 0.645,
+      "average_precision": 0.28294643375043177,
+      "false_alerts_per_1000_benign": 248.0,
+      "recall_at_120_reviews": 0.19,
+      "alerted_amount": "1771392"
+    },
+    "haircut": {
+      "precision": 0.4069400630914827,
+      "recall": 0.645,
+      "average_precision": 0.31056803366559965,
+      "false_alerts_per_1000_benign": 188.0,
+      "recall_at_120_reviews": 0.245,
+      "alerted_amount": "1519488"
+    }
+  },
+  "scan_latency_ms": {
+    "p50": 0.0034589902497828007,
+    "p95": 0.0046659872168675065,
+    "p99": 0.005541029968298972
+  },
+  "limitations": [
+    "Designed synthetic labels, not real-bank generalisation.",
+    "No tuned parameters or trained classifiers; fixed report policy.",
+    "Latency measures arithmetic only, not transfer, lock wait or PostgreSQL throughput.",
+    "ML uses the existing PaySim artifact on synthetic target snapshots; this is a domain-mismatch stress test. Behaviour features assume one source customer, the listed earlier debit, no device/location anomaly and midday UTC. Historical graph has a separate chronological PaySim experiment."
+  ]
+}

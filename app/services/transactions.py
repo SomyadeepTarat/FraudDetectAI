@@ -17,6 +17,7 @@ from app.db.models import (
 )
 from app.schemas import TransactionCreate
 from app.services.features import behaviour_features, behaviour_risk
+from app.services.flow_evidence import digest, persist_flow
 
 
 class Inference(Protocol):
@@ -57,6 +58,21 @@ def process_transfer(
         )
         if not customer:
             raise BankingError("Customer not found", 404)
+        canonical_request = request.model_dump(mode="json")
+        canonical_request["amount"] = f"{request.amount:.2f}"
+        request_hash = digest(canonical_request)
+        if request.idempotency_key:
+            prior = session.scalar(
+                select(BankingTransaction).where(
+                    BankingTransaction.idempotency_key == request.idempotency_key
+                )
+            )
+            if prior:
+                if prior.request_digest != request_hash:
+                    raise BankingError(
+                        "Idempotency key belongs to a different request", 409
+                    )
+                return prior
         if customer.status != "ACTIVE":
             raise BankingError("Customer is not active", 409)
         if request.account_id == request.destination_account_id:
@@ -102,6 +118,7 @@ def process_transfer(
             device = None
         transaction = BankingTransaction(
             **request.model_dump(),
+            request_digest=request_hash,
             transaction_timestamp=timestamp or utcnow(),
             balance_before=source.balance,
             balance_after=source.balance - request.amount,
@@ -113,6 +130,7 @@ def process_transfer(
         destination.balance = transaction.destination_balance_after
         session.add(transaction)
         session.flush()
+        persist_flow(session, transaction, source, destination)
         features = behaviour_features(session, transaction)
         behaviour, reasons = behaviour_risk(features)
         try:

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="510" height="405" viewBox="0 0 510 405">
+<rect width="100%" height="100%" fill="white"/>
+<rect x="0" y="10" width="175" height="70" rx="6" fill="#E9F8F5" stroke="#087F8C"/>
+<text x="87.5" y="29" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#087F8C">ACCOUNTS (existing)</text>
+<text x="87.5" y="46" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">PK account_id</text>
+<text x="87.5" y="59" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">Proposed: ledger_seq</text>
+<rect x="335" y="10" width="175" height="70" rx="6" fill="#EDF4F8" stroke="#142C46"/>
+<text x="422.5" y="29" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#142C46">TRANSACTIONS (existing)</text>
+<text x="422.5" y="46" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">PK transaction_id</text>
+<text x="422.5" y="59" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">Immutable monetary facts</text>
+<rect x="151" y="121" width="208" height="88" rx="6" fill="#E9F8F5" stroke="#087F8C"/>
+<text x="255.0" y="140" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#087F8C">LEDGER_ENTRIES (new)</text>
+<text x="255.0" y="157" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">PK (account_id, seq)</text>
+<text x="255.0" y="170" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">FK account_id / transaction_id</text>
+<text x="255.0" y="183" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">side, amount, before / after</text>
+<text x="255.0" y="196" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">recorded_at, payload_hash</text>
+<polyline points="87,80 87,147 151,147" fill="none" stroke="#087F8C" stroke-width="1.2" />
+<polygon points="151,147 146.0,144.5 146.0,149.5" fill="#087F8C"/>
+<text x="82" y="111" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="normal" fill="#087F8C">1 : 0..N</text>
+<polyline points="422,80 422,147 359,147" fill="none" stroke="#087F8C" stroke-width="1.2" />
+<polygon points="359,147 364.0,149.5 364.0,144.5" fill="#087F8C"/>
+<text x="463" y="111" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="normal" fill="#087F8C">1 : exactly 2*</text>
+<rect x="0" y="260" width="222" height="101" rx="6" fill="#E9F8F5" stroke="#087F8C"/>
+<text x="111.0" y="279" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#087F8C">FLOW_CERTIFICATES (new)</text>
+<text x="111.0" y="296" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">PK certificate_id</text>
+<text x="111.0" y="309" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">FK / UK transaction_id</text>
+<text x="111.0" y="322" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">opening balance, seq range, window</text>
+<text x="111.0" y="335" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">lower / upper amounts, status</text>
+<text x="111.0" y="348" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">algorithm + policy versions, hash</text>
+<rect x="287" y="260" width="223" height="101" rx="6" fill="#E9F8F5" stroke="#087F8C"/>
+<text x="398.5" y="279" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#087F8C">CERTIFICATE_EVIDENCE (new)</text>
+<text x="398.5" y="296" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">PK (certificate_id, account_id, seq)</text>
+<text x="398.5" y="309" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">FK certificate_id</text>
+<text x="398.5" y="322" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">Composite FK (account_id, seq)</text>
+<text x="398.5" y="335" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">ordinal, role; UK (cert, ordinal)</text>
+<polyline points="422,80 497,80 497,232 111,232 111,260" fill="none" stroke="#087F8C" stroke-width="1.2" />
+<polygon points="111,260 113.5,255.0 108.5,255.0" fill="#087F8C"/>
+<text x="280" y="226" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="normal" fill="#087F8C">transaction 1 : 0..1 certificate</text>
+<polyline points="222,312 287,312" fill="none" stroke="#087F8C" stroke-width="1.2" />
+<polygon points="287,312 282.0,309.5 282.0,314.5" fill="#087F8C"/>
+<text x="255" y="302" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="normal" fill="#087F8C">1 : 0..N</text>
+<polyline points="309,209 399,240 399,260" fill="none" stroke="#087F8C" stroke-width="1.2" />
+<polygon points="399,260 401.5,255.0 396.5,255.0" fill="#087F8C"/>
+<text x="450" y="249" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="normal" fill="#087F8C">entry 1 : 0..N</text>
+<text x="255" y="385" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#56677A">* Exactly two entries is a proposed deferred check / service invariant.</text>
+<text x="255" y="401" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#087F8C">No new schema objects are installed by this documentation change.</text>
+</svg>

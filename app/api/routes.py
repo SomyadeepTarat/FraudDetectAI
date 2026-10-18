@@ -305,3 +305,43 @@ if settings.app_env == "development":
     @router.get("/demo/index-performance")
     def explain(db: DB, customer_id: str = "C001"):
         return index_plan(db, customer_id)
+
+
+@router.get("/transactions/{transaction_id}/flow-certificate")
+def flow_certificate(transaction_id: str, db: DB):
+    from app.db.models import FlowCertificate
+
+    obj = db.scalar(
+        select(FlowCertificate).where(FlowCertificate.transaction_id == transaction_id)
+    )
+    if obj is None:
+        raise BankingError("No certificate: transfer predates evidence migration", 404)
+    return record(obj)
+
+
+@router.get("/transactions/{transaction_id}/flow-certificate/replay")
+def replay_certificate(transaction_id: str, db: DB):
+    from app.db.models import FlowCertificate
+    from app.services.flow_evidence import replay
+
+    obj = db.scalar(
+        select(FlowCertificate).where(FlowCertificate.transaction_id == transaction_id)
+    )
+    if obj is None:
+        raise BankingError("Certificate not found", 404)
+    return replay(db, obj)
+
+
+@router.get("/fraud/flow-reviews")
+def flow_reviews(db: DB, limit: int = Query(100, ge=1, le=1000)):
+    from app.db.models import FlowCertificate
+
+    return [
+        record(c)
+        for c in db.scalars(
+            select(FlowCertificate)
+            .where(FlowCertificate.review.is_(True))
+            .order_by(FlowCertificate.certificate_id)
+            .limit(limit)
+        )
+    ]

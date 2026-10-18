@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="510" height="540" viewBox="0 0 510 540">
+<rect width="100%" height="100%" fill="white"/>
+<text x="255" y="14" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="bold" fill="#142C46">Existing service + proposed funding evidence layer</text>
+<rect x="155" y="30" width="200" height="56" rx="6" fill="#EDF4F8" stroke="#142C46"/>
+<text x="255.0" y="49" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#142C46">Streamlit dashboard</text>
+<text x="255.0" y="66" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">Banking, alerts, DBMS, ML pages</text>
+<rect x="155" y="112" width="200" height="56" rx="6" fill="#EDF4F8" stroke="#142C46"/>
+<text x="255.0" y="131" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#142C46">FastAPI + transfer service</text>
+<text x="255.0" y="148" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">Validation and ordered row locks</text>
+<polyline points="255,86 255,112" fill="none" stroke="#56677A" stroke-width="1.2" />
+<polygon points="255,112 257.5,107.0 252.5,107.0" fill="#56677A"/>
+<text x="285" y="102" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="normal" fill="#56677A">REST</text>
+<rect x="155" y="196" width="200" height="69" rx="6" fill="#EDF4F8" stroke="#142C46"/>
+<text x="255.0" y="215" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#142C46">Atomic transfer boundary</text>
+<text x="255.0" y="232" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">Debit / credit + transaction row</text>
+<text x="255.0" y="245" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">Model inference + stored prediction</text>
+<polyline points="255,168 255,196" fill="none" stroke="#56677A" stroke-width="1.2" />
+<polygon points="255,196 257.5,191.0 252.5,191.0" fill="#56677A"/>
+<rect x="0" y="294" width="145" height="81" rx="6" fill="#EDF4F8" stroke="#142C46"/>
+<text x="72.5" y="313" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#142C46">Existing scoring</text>
+<text x="72.5" y="330" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">Indexed history / behaviour</text>
+<text x="72.5" y="343" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">PaySim baseline adapter</text>
+<text x="72.5" y="356" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">Raw ML probability retained</text>
+<rect x="178" y="294" width="155" height="81" rx="6" fill="#EDF4F8" stroke="#142C46"/>
+<text x="255.5" y="313" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#142C46">PostgreSQL</text>
+<text x="255.5" y="330" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">Constraints, FKs, indexes</text>
+<text x="255.5" y="343" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">Alert + audit triggers</text>
+<text x="255.5" y="356" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">Commit or full rollback</text>
+<rect x="365" y="294" width="145" height="81" rx="6" fill="#E9F8F5" stroke="#087F8C"/>
+<text x="437.5" y="313" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#087F8C">Proposed: FABC</text>
+<text x="437.5" y="330" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">Ordered ledger entries</text>
+<text x="437.5" y="343" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">Recent-funding bounds</text>
+<text x="437.5" y="356" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">Evidence certificate</text>
+<polyline points="185,265 72,282 72,294" fill="none" stroke="#56677A" stroke-width="1.2" />
+<polygon points="72,294 74.5,289.0 69.5,289.0" fill="#56677A"/>
+<polyline points="255,265 255,294" fill="none" stroke="#56677A" stroke-width="1.2" />
+<polygon points="255,294 257.5,289.0 252.5,289.0" fill="#56677A"/>
+<polyline points="325,265 437,282 437,294" fill="none" stroke="#087F8C" stroke-width="1.2" stroke-dasharray="4 3"/>
+<polygon points="437,294 439.5,289.0 434.5,289.0" fill="#087F8C"/>
+<polyline points="145,335 178,335" fill="none" stroke="#56677A" stroke-width="1.2" />
+<polygon points="178,335 173.0,332.5 173.0,337.5" fill="#56677A"/>
+<polyline points="365,335 333,335" fill="none" stroke="#087F8C" stroke-width="1.2" stroke-dasharray="4 3"/>
+<polygon points="333,335 338.0,337.5 338.0,332.5" fill="#087F8C"/>
+<rect x="155" y="404" width="200" height="56" rx="6" fill="#EDF4F8" stroke="#142C46"/>
+<text x="255.0" y="423" text-anchor="middle" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#142C46">Persisted analyst evidence</text>
+<text x="255.0" y="440" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#23364D">Prediction, alert, audit; proposed bounds</text>
+<polyline points="255,375 255,404" fill="none" stroke="#56677A" stroke-width="1.2" />
+<polygon points="255,404 257.5,399.0 252.5,399.0" fill="#56677A"/>
+<text x="255" y="484" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" font-weight="normal" fill="#142C46">All essential writes commit together; FLAGGED still moves funds.</text>
+<text x="255" y="503" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#56677A">Separate batch path: PaySim -&gt; features / graph -&gt; train -&gt; artifacts.</text>
+<text x="255" y="522" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="normal" fill="#087F8C">Navy = existing   |   Teal / dashed = proposed, not implemented</text>
+</svg>

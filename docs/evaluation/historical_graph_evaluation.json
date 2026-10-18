@@ -1,0 +1,67 @@
+{
+  "seed": 20261016,
+  "sample_fraction": 0.02,
+  "rows": 127171,
+  "split_steps": {
+    "validation_start": 404,
+    "test_start": 564
+  },
+  "splits": {
+    "train": {
+      "rows": 117936,
+      "fraud": 91
+    },
+    "validation": {
+      "rows": 5401,
+      "fraud": 34
+    },
+    "test": {
+      "rows": 3834,
+      "fraud": 38
+    }
+  },
+  "metrics": {
+    "transaction_rf": {
+      "threshold_selected_on_validation": 0.518476082199459,
+      "test": {
+        "threshold": 0.518476082199459,
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "average_precision": 1.0,
+        "confusion_matrix": {
+          "true_negative": 3796,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 38
+        }
+      }
+    },
+    "historical_graph_rf": {
+      "threshold_selected_on_validation": 0.518751513359076,
+      "test": {
+        "threshold": 0.518751513359076,
+        "accuracy": 0.9994783515910276,
+        "precision": 1.0,
+        "recall": 0.9473684210526315,
+        "f1": 0.972972972972973,
+        "roc_auc": 1.0,
+        "average_precision": 0.9999999999999999,
+        "confusion_matrix": {
+          "true_negative": 3796,
+          "false_positive": 0,
+          "false_negative": 2,
+          "true_positive": 36
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Random 2% naturally imbalanced row sample; prior graph is sampled, not complete.",
+    "Features use strictly earlier hourly steps and no fraud labels.",
+    "Two Random Forest baselines; no claim that all model families were retuned.",
+    "PaySim hourly steps cannot validate the ten-minute FABC policy."
+  ]
+}

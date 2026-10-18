@@ -1,0 +1,46 @@
+{
+  "dialect": "sqlite",
+  "with_certificate": {
+    "transfers": 100,
+    "persisted_certificates": 100,
+    "replay_agreement": true,
+    "latency_ms": {
+      "p50": 20.201250008540228,
+      "p95": 22.00897951843217,
+      "p99": 22.457694195909546
+    },
+    "throughput_per_second": 49.04867422993403,
+    "max_evidence_rows": 100,
+    "certificate_json_bytes": 1390588,
+    "query_plan": [
+      [
+        4,
+        0,
+        51,
+        "SEARCH ledger_entries USING INDEX idx_ledger_account_recorded_seq (account_id=? AND recorded_at>?)"
+      ]
+    ]
+  },
+  "without_certificate": {
+    "transfers": 100,
+    "persisted_certificates": 0,
+    "replay_agreement": null,
+    "latency_ms": {
+      "p50": 17.11027103010565,
+      "p95": 18.29222913365811,
+      "p99": 18.528185230097748
+    },
+    "throughput_per_second": 57.747719149523896,
+    "max_evidence_rows": 0,
+    "certificate_json_bytes": 0,
+    "query_plan": [
+      [
+        4,
+        0,
+        51,
+        "SEARCH ledger_entries USING INDEX idx_ledger_account_recorded_seq (account_id=? AND recorded_at>?)"
+      ]
+    ]
+  },
+  "limitations": "Sequential local synthetic workload, warm fitted model; no PostgreSQL lock-wait or concurrent throughput claim."
+}

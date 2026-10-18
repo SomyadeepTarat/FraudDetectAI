@@ -150,6 +150,14 @@ with history:
             "Inspect transaction and prediction", [r["transaction_id"] for r in rows]
         )
         st.json(next(row for row in rows if row["transaction_id"] == selected))
+        st.subheader("Recent funding evidence")
+        st.caption("Funding bounds support review; they are separate from ML probability.")
+        certificate = api("GET", f"/transactions/{selected}/flow-certificate")
+        if certificate:
+            st.json(certificate)
+            if st.button("Replay funding certificate"):
+                st.json(api("GET", f"/transactions/{selected}/flow-certificate/replay"))
+
 with alerts_tab:
     status_filter = st.selectbox(
         "Alert status filter",
@@ -236,3 +244,7 @@ with manage:
                 )
                 if result:
                     st.json(result)
+
+with st.expander("Funding review queue (separate from ML alerts)"):
+    st.caption("At least 80% unavoidable recent funding and three incoming counterparties in ten minutes. This does not establish fraud.")
+    st.dataframe(pd.DataFrame(api("GET", "/fraud/flow-reviews") or []), width="stretch")

@@ -48,6 +48,7 @@ class DeviceCreate(Input):
 
 
 class TransactionCreate(Input):
+    idempotency_key: Identifier | None = None
     customer_id: Identifier
     account_id: Identifier
     destination_account_id: Identifier

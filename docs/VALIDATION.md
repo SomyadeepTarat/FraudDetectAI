@@ -49,3 +49,12 @@ python scripts/demo_concurrency.py
 python scripts/demo_rollback.py
 docker compose exec -T postgres psql -v ON_ERROR_STOP=1 -U frauddetect -d frauddetect < docs/dbms_demo.sql
 ```
+
+
+## 16 October 2026 FABC implementation update
+
+The earlier validation above describes the pre-FABC system. See
+[the completion audit](COMPLETION_AUDIT.md) and its saved evaluation snapshots for
+the new implementation, 122 passing tests and one PostgreSQL-only skip. This run
+verified SQLite and the fitted model; PostgreSQL was unavailable. The retained demo
+history policy now supersedes the earlier cleanup description.

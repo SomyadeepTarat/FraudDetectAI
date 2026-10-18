@@ -1,0 +1,74 @@
+{
+  "status": "SYNTHETIC_PROOF_OF_CONCEPT_NOT_FRAUD_ACCURACY",
+  "runtime": {
+    "python": "3.13.4",
+    "networkx": "3.7",
+    "machine": "arm64"
+  },
+  "oracle": {
+    "cases": 250,
+    "seed_range": [
+      0,
+      249
+    ],
+    "exact_matches": 250,
+    "method": "Independent enumeration of every integer allocation per generated ledger",
+    "analyze_including_certificate_verification": {
+      "p50_ms": 0.4281,
+      "p95_ms": 0.4964
+    }
+  },
+  "split_example_minor_units": {
+    "joint": {
+      "lower": 1000000,
+      "upper": 1000000,
+      "condition": "MET"
+    },
+    "marginal": [
+      {
+        "lower": 0,
+        "upper": 1000000,
+        "condition": "UNRESOLVED"
+      },
+      {
+        "lower": 0,
+        "upper": 1000000,
+        "condition": "UNRESOLVED"
+      }
+    ],
+    "merged": {
+      "lower": 1000000,
+      "upper": 1000000,
+      "condition": "MET"
+    }
+  },
+  "query_microbenchmark": {
+    "cases": 100,
+    "seed_range": [
+      0,
+      99
+    ],
+    "query_budget": 1,
+    "cost_each": 1,
+    "cases_resolved_for_every_query_outcome": {
+      "decision_directed": 100,
+      "widest_boundary": 0,
+      "random_query_seed_1729": 40,
+      "reachability_filter_then_widest_boundary": 100
+    },
+    "uniform_random_expected_resolved_cases": 50,
+    "selection_including_counterfactual_solves": {
+      "p50_ms": 1.2623,
+      "p95_ms": 1.4884
+    },
+    "limitation": "Deliberately constructed relevant-versus-disconnected-distractor family. A simple reachability baseline ties the proposed method. Not representative banking data; no demonstrated superiority to strong baselines, trained EDDI or production models."
+  },
+  "not_measured": [
+    "fraud precision/recall",
+    "real analyst workload",
+    "network or bank retrieval cost",
+    "production latency",
+    "incremental solver speedup",
+    "patent novelty"
+  ]
+}

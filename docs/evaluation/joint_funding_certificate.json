@@ -1,0 +1,155 @@
+{
+  "certificate": {
+    "version": "joint-funding-v1",
+    "solver": "networkx-3.7-network-simplex",
+    "ledger": {
+      "snapshot_id": "synthetic-query-0",
+      "cohort_id": "boundary-demo",
+      "currency": "INR",
+      "complete": true,
+      "opening": [
+        {
+          "id": "relevant",
+          "account": "A",
+          "amount": 108,
+          "lower": 0,
+          "upper": 108
+        },
+        {
+          "id": "distractor",
+          "account": "B",
+          "amount": 1080,
+          "lower": 0,
+          "upper": 1080
+        },
+        {
+          "id": "empty",
+          "account": "C",
+          "amount": 0,
+          "lower": 0,
+          "upper": 0
+        }
+      ],
+      "movements": [
+        {
+          "id": "forward",
+          "source": "A",
+          "destination": "C",
+          "amount": 108
+        }
+      ],
+      "targets": [
+        "C"
+      ]
+    },
+    "threshold": 98,
+    "result": {
+      "lower": 0,
+      "upper": 108,
+      "condition": "UNRESOLVED"
+    },
+    "lower_witness": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "upper_witness": [
+      108,
+      0,
+      0,
+      0,
+      0,
+      108,
+      0,
+      0,
+      108,
+      108
+    ],
+    "digest": "1c283f883b1fb448f4a8e7904f09a3ecbea821585dd21b783bb986ec825fc596"
+  },
+  "evidence_selection": {
+    "version": "joint-funding-v1",
+    "policy": "minimax-unresolved-width-per-cost-v1",
+    "base_certificate_digest": "1c283f883b1fb448f4a8e7904f09a3ecbea821585dd21b783bb986ec825fc596",
+    "selected_query": "relevant-query",
+    "reason": "Positive worst-case decision-ambiguity reduction",
+    "ranking": [
+      {
+        "query": {
+          "id": "relevant-query",
+          "record_id": "relevant",
+          "cost": 1,
+          "evidence_reference": "SIMULATED upstream boundary certificate",
+          "outcomes": [
+            [
+              0,
+              97
+            ],
+            [
+              98,
+              108
+            ]
+          ]
+        },
+        "outcomes": [
+          {
+            "lower": 0,
+            "upper": 97,
+            "condition": "NOT_MET"
+          },
+          {
+            "lower": 98,
+            "upper": 108,
+            "condition": "MET"
+          }
+        ],
+        "guaranteed_ambiguity_reduction": 108,
+        "score_numerator": 108,
+        "score_denominator": 1,
+        "all_outcomes_resolve": true
+      },
+      {
+        "query": {
+          "id": "distractor-query",
+          "record_id": "distractor",
+          "cost": 1,
+          "evidence_reference": "SIMULATED unrelated boundary certificate",
+          "outcomes": [
+            [
+              0,
+              540
+            ],
+            [
+              541,
+              1080
+            ]
+          ]
+        },
+        "outcomes": [
+          {
+            "lower": 0,
+            "upper": 108,
+            "condition": "UNRESOLVED"
+          },
+          {
+            "lower": 0,
+            "upper": 108,
+            "condition": "UNRESOLVED"
+          }
+        ],
+        "guaranteed_ambiguity_reduction": 0,
+        "score_numerator": 0,
+        "score_denominator": 1,
+        "all_outcomes_resolve": false
+      }
+    ],
+    "digest": "13e4566e9c0b0f2c86368e3c6001359dc09bbc30fdfdb0ffb13e21411c18eb32"
+  }
+}
