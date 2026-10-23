@@ -4,6 +4,10 @@ A Database Systems course project: relational banking transactions, ACID transfe
 concurrency protection, SQL triggers/audit logs, indexed analytics and integrated
 PaySim fraud detection. The existing ML pipeline and analysis pages are preserved.
 
+Docker image repository: [sayantarat/frauddetectai on Docker Hub](https://hub.docker.com/r/sayantarat/frauddetectai).
+The Compose backend uses `sayantarat/frauddetectai:latest`; local model artifacts
+are mounted separately from `./models`. See the setup instructions below.
+
 
 ## Implementation update - 16 October 2026
 
@@ -55,6 +59,42 @@ creation if desired, then update the URL. PostgreSQL data persists in a named vo
 `docker compose up --build -d` optionally runs the backend too; generate/provide the
 baseline model first because the container mounts `./models` read-only. Apply seed
 scripts from your host with the PostgreSQL URL. Ports bind to localhost.
+
+### Docker Hub submission image
+
+Image repository: [sayantarat/frauddetectai](https://hub.docker.com/r/sayantarat/frauddetectai).
+The `latest` and `submission-2026-10-23` tags target Linux AMD64 and ARM64.
+
+```bash
+docker pull sayantarat/frauddetectai:latest
+```
+
+To use the published backend with PostgreSQL, clone this repository, provide the
+trusted baseline model at `models/baseline/random_forest.joblib`, then run:
+
+```bash
+docker compose pull backend postgres
+docker compose up -d --no-build
+docker compose exec backend python scripts/seed_database.py
+```
+
+Open the API documentation at <http://localhost:8000/docs>. The image excludes
+datasets, trained models, reports and local credentials. The Compose backend
+mounts your local `models` directory and applies migrations on startup.
+Run the Streamlit dashboard separately using the local setup above, or in a
+second container connected to the backend:
+
+```bash
+docker run --rm -p 127.0.0.1:8501:8501 \
+  -e BANKING_API_URL=http://host.docker.internal:8000 \
+  sayantarat/frauddetectai:latest \
+  streamlit run app/streamlit_app.py --server.address=0.0.0.0
+```
+
+The `host.docker.internal` address is supplied by Docker Desktop. On Linux Docker
+Engine, add `--add-host=host.docker.internal:host-gateway` and make the backend
+reachable from that container. ML analysis pages need the separately generated
+data/report artifacts mounted at `/app/data` and `/app/reports`.
 
 ### Zero-server SQLite fallback
 

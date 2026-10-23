@@ -15,6 +15,7 @@ services:
       timeout: 5s
       retries: 20
   backend:
+    image: sayantarat/frauddetectai:latest
     build: .
     environment:
       DATABASE_URL: postgresql+psycopg://frauddetect:${POSTGRES_PASSWORD:-local_demo_password}@postgres:5432/frauddetect

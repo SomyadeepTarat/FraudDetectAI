@@ -1,0 +1,765 @@
+{
+  "audit_logs": [
+    {
+      "name": "audit_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": true,
+      "fk": []
+    },
+    {
+      "name": "table_name",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "record_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "operation",
+      "type": "VARCHAR(10)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "old_values",
+      "type": "JSON",
+      "nullable": true,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "new_values",
+      "type": "JSON",
+      "nullable": true,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "changed_at",
+      "type": "DATETIME",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "changed_by",
+      "type": "VARCHAR(120)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    }
+  ],
+  "customers": [
+    {
+      "name": "customer_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": true,
+      "fk": []
+    },
+    {
+      "name": "name",
+      "type": "VARCHAR(120)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "email",
+      "type": "VARCHAR(254)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "phone",
+      "type": "VARCHAR(30)",
+      "nullable": true,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "status",
+      "type": "VARCHAR(20)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "created_at",
+      "type": "DATETIME",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    }
+  ],
+  "risk_settings": [
+    {
+      "name": "settings_id",
+      "type": "INTEGER",
+      "nullable": false,
+      "pk": true,
+      "fk": []
+    },
+    {
+      "name": "fraud_threshold",
+      "type": "DOUBLE",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "account_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": true,
+      "fk": []
+    },
+    {
+      "name": "customer_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": false,
+      "fk": [
+        "customers.customer_id"
+      ]
+    },
+    {
+      "name": "ledger_started_at",
+      "type": "DATETIME",
+      "nullable": true,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "ledger_seq",
+      "type": "BIGINT",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "account_type",
+      "type": "VARCHAR(20)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "balance",
+      "type": "NUMERIC(18, 2)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "currency",
+      "type": "VARCHAR(3)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "status",
+      "type": "VARCHAR(20)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "created_at",
+      "type": "DATETIME",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    }
+  ],
+  "devices": [
+    {
+      "name": "device_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": true,
+      "fk": []
+    },
+    {
+      "name": "customer_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": false,
+      "fk": [
+        "customers.customer_id"
+      ]
+    },
+    {
+      "name": "device_type",
+      "type": "VARCHAR(30)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "device_identifier",
+      "type": "VARCHAR(120)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "ip_address",
+      "type": "VARCHAR(45)",
+      "nullable": true,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "first_seen",
+      "type": "DATETIME",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "last_seen",
+      "type": "DATETIME",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "trusted",
+      "type": "BOOLEAN",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    }
+  ],
+  "transactions": [
+    {
+      "name": "transaction_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": true,
+      "fk": []
+    },
+    {
+      "name": "account_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": false,
+      "fk": [
+        "accounts.account_id"
+      ]
+    },
+    {
+      "name": "customer_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": false,
+      "fk": [
+        "customers.customer_id",
+        "accounts.customer_id",
+        "devices.customer_id"
+      ]
+    },
+    {
+      "name": "destination_account_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": false,
+      "fk": [
+        "accounts.account_id"
+      ]
+    },
+    {
+      "name": "idempotency_key",
+      "type": "VARCHAR(64)",
+      "nullable": true,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "request_digest",
+      "type": "VARCHAR(64)",
+      "nullable": true,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "amount",
+      "type": "NUMERIC(18, 2)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "transaction_type",
+      "type": "VARCHAR(20)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "payment_method",
+      "type": "VARCHAR(20)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "transaction_timestamp",
+      "type": "DATETIME",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "location",
+      "type": "VARCHAR(120)",
+      "nullable": true,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "latitude",
+      "type": "DOUBLE",
+      "nullable": true,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "longitude",
+      "type": "DOUBLE",
+      "nullable": true,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "device_id",
+      "type": "VARCHAR(64)",
+      "nullable": true,
+      "pk": false,
+      "fk": [
+        "devices.device_id"
+      ]
+    },
+    {
+      "name": "status",
+      "type": "VARCHAR(20)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "balance_before",
+      "type": "NUMERIC(18, 2)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "balance_after",
+      "type": "NUMERIC(18, 2)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "destination_balance_before",
+      "type": "NUMERIC(18, 2)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "destination_balance_after",
+      "type": "NUMERIC(18, 2)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "created_at",
+      "type": "DATETIME",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    }
+  ],
+  "fraud_predictions": [
+    {
+      "name": "prediction_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": true,
+      "fk": []
+    },
+    {
+      "name": "transaction_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": false,
+      "fk": [
+        "transactions.transaction_id"
+      ]
+    },
+    {
+      "name": "model_name",
+      "type": "VARCHAR(120)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "model_version",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "fraud_probability",
+      "type": "DOUBLE",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "behaviour_score",
+      "type": "DOUBLE",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "risk_score",
+      "type": "DOUBLE",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "classification",
+      "type": "VARCHAR(20)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "features",
+      "type": "JSON",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "reasons",
+      "type": "JSON",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "predicted_at",
+      "type": "DATETIME",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    }
+  ],
+  "ledger_entries": [
+    {
+      "name": "account_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": true,
+      "fk": [
+        "accounts.account_id"
+      ]
+    },
+    {
+      "name": "seq",
+      "type": "BIGINT",
+      "nullable": false,
+      "pk": true,
+      "fk": []
+    },
+    {
+      "name": "transaction_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": false,
+      "fk": [
+        "transactions.transaction_id"
+      ]
+    },
+    {
+      "name": "side",
+      "type": "VARCHAR(6)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "amount",
+      "type": "NUMERIC(18, 2)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "balance_before",
+      "type": "NUMERIC(18, 2)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "balance_after",
+      "type": "NUMERIC(18, 2)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "recorded_at",
+      "type": "DATETIME",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    }
+  ],
+  "flow_certificates": [
+    {
+      "name": "certificate_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": true,
+      "fk": []
+    },
+    {
+      "name": "transaction_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": false,
+      "fk": [
+        "transactions.transaction_id",
+        "ledger_entries.transaction_id"
+      ]
+    },
+    {
+      "name": "account_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": false,
+      "fk": [
+        "accounts.account_id",
+        "ledger_entries.account_id"
+      ]
+    },
+    {
+      "name": "target_seq",
+      "type": "BIGINT",
+      "nullable": false,
+      "pk": false,
+      "fk": [
+        "ledger_entries.seq"
+      ]
+    },
+    {
+      "name": "target_side",
+      "type": "VARCHAR(6)",
+      "nullable": false,
+      "pk": false,
+      "fk": [
+        "ledger_entries.side"
+      ]
+    },
+    {
+      "name": "target_amount",
+      "type": "NUMERIC(18, 2)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "status",
+      "type": "VARCHAR(12)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "lower_amount",
+      "type": "NUMERIC(18, 2)",
+      "nullable": true,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "upper_amount",
+      "type": "NUMERIC(18, 2)",
+      "nullable": true,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "review",
+      "type": "BOOLEAN",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "algorithm_version",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "policy_version",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "payload",
+      "type": "JSON",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "evidence_digest",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    }
+  ],
+  "fraud_alerts": [
+    {
+      "name": "alert_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": true,
+      "fk": []
+    },
+    {
+      "name": "transaction_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": false,
+      "fk": [
+        "transactions.transaction_id",
+        "fraud_predictions.transaction_id"
+      ]
+    },
+    {
+      "name": "prediction_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": false,
+      "fk": [
+        "fraud_predictions.prediction_id"
+      ]
+    },
+    {
+      "name": "risk_score",
+      "type": "DOUBLE",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "reason",
+      "type": "VARCHAR(500)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "alert_status",
+      "type": "VARCHAR(20)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "created_at",
+      "type": "DATETIME",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "reviewed_at",
+      "type": "DATETIME",
+      "nullable": true,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "reviewed_by",
+      "type": "VARCHAR(120)",
+      "nullable": true,
+      "pk": false,
+      "fk": []
+    }
+  ],
+  "certificate_evidence": [
+    {
+      "name": "certificate_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": true,
+      "fk": [
+        "flow_certificates.certificate_id"
+      ]
+    },
+    {
+      "name": "account_id",
+      "type": "VARCHAR(64)",
+      "nullable": false,
+      "pk": true,
+      "fk": [
+        "ledger_entries.account_id"
+      ]
+    },
+    {
+      "name": "seq",
+      "type": "BIGINT",
+      "nullable": false,
+      "pk": true,
+      "fk": [
+        "ledger_entries.seq"
+      ]
+    },
+    {
+      "name": "ordinal",
+      "type": "INTEGER",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    },
+    {
+      "name": "role",
+      "type": "VARCHAR(20)",
+      "nullable": false,
+      "pk": false,
+      "fk": []
+    }
+  ]
+}
